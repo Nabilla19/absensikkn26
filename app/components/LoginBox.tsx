@@ -53,7 +53,7 @@ export default function LoginBox() {
             Desa<br/>Padang Luas
           </h1>
           
-          <div style={{
+          <div className="tema-box" style={{
             background: 'rgba(255,255,255,0.1)',
             borderRadius: '16px',
             padding: '2rem',
@@ -83,7 +83,7 @@ export default function LoginBox() {
           </div>
 
           {/* DPL section */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div className="dpl-box" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/dpl.jpeg"
@@ -125,7 +125,7 @@ export default function LoginBox() {
         
         <div className="login-form-wrapper" style={{ width: '100%', maxWidth: '420px' }}>
           {/* Title */}
-          <h1 style={{
+          <h1 className="login-title" style={{
             fontFamily: 'var(--font-heading)',
             fontSize: '2.25rem',
             fontWeight: 800,
@@ -133,7 +133,7 @@ export default function LoginBox() {
             marginBottom: '0.5rem',
             lineHeight: 1.2,
           }}>Portal Absensi KKN</h1>
-          <p style={{ color: '#64748b', marginBottom: '3rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
+          <p className="login-desc" style={{ color: '#64748b', marginBottom: '3rem', fontSize: '0.95rem', lineHeight: 1.6 }}>
             Gunakan akun Google akademik UIN SUSKA Riau Anda untuk mengakses sistem kehadiran.
           </p>
 
@@ -197,14 +197,14 @@ export default function LoginBox() {
           </button>
 
           {/* Divider */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '2.5rem 0' }}>
+          <div className="info-divider" style={{ display: 'flex', alignItems: 'center', gap: '1rem', margin: '2.5rem 0' }}>
             <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
             <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 600 }}>INFORMASI</span>
             <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
           </div>
 
           {/* Info box */}
-          <div style={{
+          <div className="info-box" style={{
             background: '#f8faff',
             border: '1px solid #dbeafe',
             borderRadius: '12px',
@@ -230,14 +230,39 @@ export default function LoginBox() {
             grid-template-columns: 1fr !important;
             display: flex !important;
             flex-direction: column !important;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
           }
           .left-panel {
-            padding: 3rem 2rem !important;
+            padding: 1.5rem !important;
+            flex: 0.45;
+            justify-content: center;
+          }
+          .left-panel .tema-box {
+            display: none !important;
+          }
+          .left-panel h1 {
+            font-size: 2rem !important;
+            margin-bottom: 0.5rem !important;
+          }
+          .left-panel .dpl-box img {
+            width: 48px !important;
+            height: 48px !important;
           }
           .right-panel {
-            padding: 3rem 2rem !important;
-            flex: 1;
+            padding: 1.5rem !important;
+            flex: 0.55;
+            justify-content: flex-start !important;
+            padding-top: 2rem !important;
+          }
+          .right-panel .login-title {
+            font-size: 1.75rem !important;
+          }
+          .right-panel .login-desc {
+            margin-bottom: 2rem !important;
+          }
+          .right-panel .info-divider, .right-panel .info-box {
+            display: none !important;
           }
         }
       `}</style>

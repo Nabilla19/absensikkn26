@@ -78,10 +78,10 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="container">
-        <div style={{ marginBottom: '2rem' }} className="animate-fade-in greeting-section">
-          <h2 className="greeting-title">
-            Selamat Datang, <span className="text-gradient">{user.name}</span>!
+      <main className="container" style={{ paddingTop: '100px', zIndex: 1, position: 'relative' }}>
+        <div style={{ marginBottom: '3rem' }}>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+            Selamat Datang, <span style={{ color: 'var(--accent-primary)' }}>{user.name}</span>!
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Silakan isi daftar hadir untuk kegiatan KKN hari ini.</p>
         </div>

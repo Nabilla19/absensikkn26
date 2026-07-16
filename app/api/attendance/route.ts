@@ -51,6 +51,8 @@ export async function GET() {
   }
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -70,8 +72,12 @@ export async function POST(request: Request) {
       await sheet.setHeaderRow(['Nama', 'Email', 'Jabatan', 'Waktu Absen']);
     }
 
-    // Prepare new row
-    const timestamp = new Date().toISOString();
+    // Prepare new row in WIB timezone (Asia/Jakarta) formatted as YYYY-MM-DD HH:mm:ss
+    const now = new Date();
+    // Using en-CA (YYYY-MM-DD) and en-GB (HH:mm:ss) to reliably build the string
+    const dateWIB = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' });
+    const timeWIB = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta' });
+    const timestamp = `${dateWIB} ${timeWIB}`;
     
     // Using object style row addition
     await sheet.addRow({
