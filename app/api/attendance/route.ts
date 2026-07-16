@@ -24,6 +24,14 @@ export async function GET() {
   try {
     const doc = await getDoc();
     const sheet = doc.sheetsByIndex[0]; 
+    
+    try {
+      await sheet.loadHeaderRow();
+    } catch (e) {
+      // If loadHeaderRow fails, it means the sheet is completely blank.
+      return NextResponse.json([]); // Return empty array since there are no records
+    }
+
     const rows = await sheet.getRows();
 
     // Mapping rows to JSON
@@ -55,8 +63,10 @@ export async function POST(request: Request) {
     const doc = await getDoc();
     const sheet = doc.sheetsByIndex[0];
 
-    // Cek header jika sheet kosong
-    if (sheet.headerValues.length === 0) {
+    try {
+      await sheet.loadHeaderRow();
+    } catch (e) {
+      // If it fails, the sheet is empty. We must set headers first.
       await sheet.setHeaderRow(['Nama', 'Email', 'Jabatan', 'Waktu Absen']);
     }
 

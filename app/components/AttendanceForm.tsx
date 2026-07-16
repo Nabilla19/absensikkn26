@@ -42,7 +42,7 @@ export default function AttendanceForm() {
 
     const success = await addRecord({
       name,
-      email: user.email,
+      email: user.email || '',
       role
     });
     
