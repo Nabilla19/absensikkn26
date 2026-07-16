@@ -36,11 +36,11 @@ export async function GET() {
 
     // Mapping rows to JSON
     const records = rows.map((row: any) => ({
-      id: row.rowIndex.toString(), // unique pseudo-id
-      name: row.Nama || '',
-      email: row.Email || '',
-      role: row.Jabatan || '',
-      timestamp: row['Waktu Absen'] || ''
+      id: row.rowNumber.toString(), // unique pseudo-id
+      name: row.get('Nama') || '',
+      email: row.get('Email') || '',
+      role: row.get('Jabatan') || '',
+      timestamp: row.get('Waktu Absen') || ''
     }));
 
     // Return reversed so newest is first
