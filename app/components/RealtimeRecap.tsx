@@ -124,10 +124,7 @@ export default function RealtimeRecap() {
     <div className="glass-panel animate-fade-in" style={{ padding: '2rem', animationDelay: '0.2s', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem' }}>
         <h3>Rekap Kehadiran</h3>
-        <span className="badge badge-success" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--success)', boxShadow: '0 0 8px var(--success)' }}></span>
-          Live
-        </span>
+
       </div>
 
       {/* Toolbar (Search, Filter, Export) */}
