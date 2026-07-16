@@ -362,11 +362,15 @@ export default function LoginBox() {
             padding: 0 1.5rem 2.5rem 1.5rem;
             background: transparent;
             align-items: flex-start;
+            position: relative;
+            z-index: 10;
           }
           .login-card {
             margin-top: -3rem; /* Float over the blue header */
             padding: 2rem 1.5rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 10;
           }
           
           .circle-1 { width: 300px; height: 300px; }
