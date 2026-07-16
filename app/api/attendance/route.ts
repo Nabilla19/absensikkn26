@@ -5,8 +5,8 @@ import { JWT } from 'google-auth-library';
 // Helper function to load the Google Sheet document
 async function getDoc() {
   // Format private key correctly (handling escaped newlines if passed directly in env)
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY 
-    ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n') 
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY
+    ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
     : '';
 
   const serviceAccountAuth = new JWT({
@@ -16,15 +16,15 @@ async function getDoc() {
   });
 
   const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID as string, serviceAccountAuth);
-  await doc.loadInfo(); 
+  await doc.loadInfo();
   return doc;
 }
 
 export async function GET() {
   try {
     const doc = await getDoc();
-    const sheet = doc.sheetsByIndex[0]; 
-    
+    const sheet = doc.sheetsByIndex[0];
+
     try {
       await sheet.loadHeaderRow();
     } catch (e) {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     const dateWIB = now.toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' });
     const timeWIB = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta' });
     const timestamp = `${dateWIB} ${timeWIB}`;
-    
+
     // Using object style row addition
     await sheet.addRow({
       'Nama': name,
