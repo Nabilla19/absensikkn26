@@ -114,16 +114,25 @@ export default function Home() {
             display: block;
           }
           .header-content {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
+            flex-direction: row;
+            gap: 0.5rem;
+            align-items: center;
+          }
+          .header-content h1 {
+            font-size: 1.1rem !important;
           }
           .user-profile {
-            width: 100%;
-            justify-content: flex-end;
+            gap: 0.5rem;
+          }
+          .user-profile img {
+            width: 32px !important;
+            height: 32px !important;
           }
           .user-info {
-            text-align: right;
+            max-width: 120px;
+          }
+          .logout-btn {
+            padding: 0.4rem;
           }
         }
       `}</style>
