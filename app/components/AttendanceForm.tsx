@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useDatabase } from '../contexts/DatabaseContext';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 
 const ROLES = [
   'Koordinator Desa',
@@ -60,19 +60,21 @@ export default function AttendanceForm() {
 
   // Efek untuk Scanner QR Code
   useEffect(() => {
-    let scanner: Html5QrcodeScanner | null = null;
+    let html5QrCode: Html5Qrcode | null = null;
     
     if (showScanner) {
-      scanner = new Html5QrcodeScanner(
-        "qr-reader", 
-        { fps: 10, qrbox: { width: 250, height: 250 } }, 
-        false
-      );
+      html5QrCode = new Html5Qrcode("qr-reader");
       
-      scanner.render(
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
         (decodedText) => {
           if (decodedText === EXPECTED_QR_VALUE) {
-            scanner?.clear();
+            if (html5QrCode?.isScanning) {
+              html5QrCode.stop().then(() => {
+                html5QrCode?.clear();
+              }).catch(console.error);
+            }
             setShowScanner(false);
             processLocationAndSubmit();
           } else {
@@ -82,11 +84,21 @@ export default function AttendanceForm() {
         (err) => {
           // ignore scan errors (they happen every frame when no QR is detected)
         }
-      );
+      ).catch((err) => {
+        console.error("Gagal memulai kamera", err);
+        alert("Tidak dapat mengakses kamera. Pastikan Anda telah memberikan izin kamera.");
+        setShowScanner(false);
+      });
     }
 
     return () => {
-      scanner?.clear().catch(console.error);
+      if (html5QrCode?.isScanning) {
+        html5QrCode.stop().then(() => {
+          html5QrCode?.clear();
+        }).catch(console.error);
+      } else {
+        html5QrCode?.clear();
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showScanner]);
