@@ -21,7 +21,7 @@ const ROLES = [
 // Lokasi: 5Q77+CH6, Padang Luas, Langgam, Pelalawan
 const POSKO_LAT = 0.1635375; 
 const POSKO_LNG = 101.763890625;
-const MAX_DISTANCE_METERS = 50; // Radius toleransi absen 50 meter
+const MAX_DISTANCE_METERS = 1000; // Radius toleransi absen 1000 meter
 const EXPECTED_QR_VALUE = "ABSEN-KKN-PADANG-LUAS-2026";
 
 // Rumus Haversine untuk menghitung jarak antara 2 koordinat (dalam meter)
@@ -215,7 +215,7 @@ export default function AttendanceForm() {
             lineHeight: 1.5
           }}>
             <strong>Syarat Kehadiran:</strong><br/>
-            Anda wajib memindai QR Code Posko & berada dalam radius 50m dari lokasi Kantor Desa Padang Luas.
+            Anda wajib memindai QR Code Posko & berada dalam radius 1000m dari lokasi Kantor Desa Padang Luas.
           </div>
 
           <button type="submit" className="btn btn-primary btn-block" disabled={isSubmitting} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
