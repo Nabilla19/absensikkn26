@@ -57,9 +57,9 @@ export default function Home() {
           <h1 className="text-gradient" style={{ margin: 0, fontSize: '1.5rem' }}>Portal Absensi KKN</h1>
           
           <div className="user-profile">
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{user.name}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{user.email}</div>
+            <div className="user-info" style={{ textAlign: 'right', overflow: 'hidden' }}>
+              <div style={{ fontWeight: 600, fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>{user.name}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>{user.email}</div>
             </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
@@ -80,8 +80,9 @@ export default function Home() {
 
       <main className="container" style={{ paddingTop: '100px', zIndex: 1, position: 'relative' }}>
         <div style={{ marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
-            Selamat Datang, <span style={{ color: 'var(--accent-primary)' }}>{user.name}</span>!
+          <h2 className="greeting-title" style={{ fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+            Selamat Datang, <br className="mobile-break" />
+            <span style={{ color: 'var(--accent-primary)' }}>{user.name}</span>!
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>Silakan isi daftar hadir untuk kegiatan KKN hari ini.</p>
         </div>
@@ -100,10 +101,17 @@ export default function Home() {
         .greeting-title {
           font-size: 2.5rem;
           margin-bottom: 0.5rem;
+          word-break: break-word;
+        }
+        .mobile-break {
+          display: none;
         }
         @media (max-width: 768px) {
           .greeting-title {
             font-size: 1.75rem;
+          }
+          .mobile-break {
+            display: block;
           }
           .header-content {
             flex-direction: column;
@@ -112,7 +120,10 @@ export default function Home() {
           }
           .user-profile {
             width: 100%;
-            justify-content: space-between;
+            justify-content: flex-end;
+          }
+          .user-info {
+            text-align: right;
           }
         }
       `}</style>

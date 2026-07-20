@@ -10,8 +10,19 @@ export default function RealtimeRecap() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDate, setFilterDate] = useState(''); // Format: YYYY-MM-DD
 
+  // Safely parse date from Google Sheets format "YYYY-MM-DD HH:mm:ss"
+  const parseDateSafe = (dateStr: string) => {
+    if (!dateStr) return new Date();
+    // Replace space with T to make it a valid ISO string
+    const normalized = dateStr.includes(' ') && !dateStr.includes('T') 
+      ? `${dateStr.replace(' ', 'T')}+07:00` 
+      : dateStr;
+    const d = new Date(normalized);
+    return isNaN(d.getTime()) ? new Date() : d;
+  };
+
   const formatDate = (isoString: string) => {
-    const date = new Date(isoString);
+    const date = parseDateSafe(isoString);
     return date.toLocaleDateString('id-ID', {
       weekday: 'short', 
       year: 'numeric', 
@@ -21,7 +32,7 @@ export default function RealtimeRecap() {
   };
 
   const formatTime = (isoString: string) => {
-    const date = new Date(isoString);
+    const date = parseDateSafe(isoString);
     return date.toLocaleTimeString('id-ID', {
       hour: '2-digit',
       minute: '2-digit',
@@ -40,7 +51,7 @@ export default function RealtimeRecap() {
         // record.timestamp is ISO string, e.g. "2026-07-16T12:00:00.000Z"
         // we can slice the first 10 chars to get YYYY-MM-DD (UTC based)
         // For accurate local timezone comparison, we should format record.timestamp to YYYY-MM-DD in local time
-        const dateObj = new Date(record.timestamp);
+        const dateObj = parseDateSafe(record.timestamp);
         const localDateString = dateObj.toLocaleDateString('en-CA'); // en-CA gives YYYY-MM-DD format
         matchDate = localDateString === filterDate;
       }
