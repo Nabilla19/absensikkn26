@@ -31,12 +31,6 @@ export default function RealtimeRecap() {
     return timePart.split('+')[0].split('.')[0] || '-';
   };
 
-    return date.toLocaleTimeString('id-ID', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-  };
 
   // Filter records based on search query and date
   const filteredRecords = useMemo(() => {
@@ -46,12 +40,9 @@ export default function RealtimeRecap() {
       
       let matchDate = true;
       if (filterDate) {
-        // record.timestamp is ISO string, e.g. "2026-07-16T12:00:00.000Z"
-        // we can slice the first 10 chars to get YYYY-MM-DD (UTC based)
-        // For accurate local timezone comparison, we should format record.timestamp to YYYY-MM-DD in local time
-        const dateObj = parseDateSafe(record.timestamp);
-        const localDateString = dateObj.toLocaleDateString('en-CA'); // en-CA gives YYYY-MM-DD format
-        matchDate = localDateString === filterDate;
+        // timestamp dari Sheets: "YYYY-MM-DD HH:mm:ss" - ambil bagian tanggal saja
+        const datePart = record.timestamp.split(' ')[0] || record.timestamp.split('T')[0];
+        matchDate = datePart === filterDate;
       }
 
       return matchSearch && matchDate;
