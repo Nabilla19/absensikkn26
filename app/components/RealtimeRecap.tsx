@@ -10,29 +10,27 @@ export default function RealtimeRecap() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDate, setFilterDate] = useState(''); // Format: YYYY-MM-DD
 
-  // Safely parse date from Google Sheets format "YYYY-MM-DD HH:mm:ss"
-  const parseDateSafe = (dateStr: string) => {
-    if (!dateStr) return new Date();
-    // Replace space with T to make it a valid ISO string
-    const normalized = dateStr.includes(' ') && !dateStr.includes('T') 
-      ? `${dateStr.replace(' ', 'T')}+07:00` 
-      : dateStr;
-    const d = new Date(normalized);
-    return isNaN(d.getTime()) ? new Date() : d;
+  // Timestamp dari Google Sheets sudah dalam format WIB: "YYYY-MM-DD HH:mm:ss"
+  // Langsung split string saja, TANPA konversi Date agar tidak ada masalah timezone
+  const formatDate = (timestamp: string) => {
+    if (!timestamp) return '-';
+    // Ambil bagian tanggal saja: "YYYY-MM-DD"
+    const datePart = timestamp.split(' ')[0] || timestamp.split('T')[0];
+    if (!datePart || datePart.length < 10) return timestamp;
+    const [year, month, day] = datePart.split('-');
+    const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    return `${parseInt(day)} ${bulan[parseInt(month) - 1]} ${year}`;
   };
 
-  const formatDate = (isoString: string) => {
-    const date = parseDateSafe(isoString);
-    return date.toLocaleDateString('id-ID', {
-      weekday: 'short', 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric'
-    });
+  const formatTime = (timestamp: string) => {
+    if (!timestamp) return '-';
+    // Ambil bagian waktu saja: "HH:mm:ss"
+    const parts = timestamp.includes('T') ? timestamp.split('T') : timestamp.split(' ');
+    const timePart = parts[1] || '';
+    // Hapus bagian timezone jika ada (e.g. +07:00)
+    return timePart.split('+')[0].split('.')[0] || '-';
   };
 
-  const formatTime = (isoString: string) => {
-    const date = parseDateSafe(isoString);
     return date.toLocaleTimeString('id-ID', {
       hour: '2-digit',
       minute: '2-digit',
